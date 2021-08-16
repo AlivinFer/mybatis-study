@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace=绑定一个对应的 Dao、Mapper 接口-->
+<mapper namespace="com.alivin.dao.UserMapper">
+    <!-- select 查询语句 -->
+    <select id="getUserList" resultType="com.alivin.pojo.User">
+        select * from user
+    </select>
+
+    <select id="getUserById" parameterType="int" resultType="com.alivin.pojo.User">
+        select * from mybatis.user where id = #{id}
+    </select>
+
+    <!--模糊查询-->
+    <select id="getUserLike" resultType="com.alivin.pojo.User">
+        select * from user where uname like #{value}
+    </select>
+    
+    
+    <!-- insert 插入语句 -->
+    <insert id="addUser" parameterType="com.alivin.pojo.User">
+        insert into mybatis.user (id, uname, pwd) values (#{id}, #{uname}, #{pwd})
+    </insert>
+
+    <!-- 使用 Map 简化操作-->
+    <insert id="addUser2" parameterType="Map">
+        insert into user (id, pwd) values (#{userid}, #{password})
+    </insert>
+
+    <!-- update 更新语句 -->
+    <update id="updateUser" parameterType="com.alivin.pojo.User">
+        update mybatis.user set uname = #{uname}, pwd = #{pwd} where id = #{id}
+    </update>
+
+    <!-- delete 删除语句 -->
+    <delete id="deleteUser" parameterType="int">
+        delete from mybatis.user where id = #{id}
+    </delete>
+</mapper>

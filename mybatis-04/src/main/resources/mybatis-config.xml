@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--注意配置的顺序-->
+    <properties resource="db.properties">
+        <property name="username" value="root"/>
+        <property name="pwd" value="123456"/>
+    </properties>
+
+    <settings>
+        <!--标准日志输出-->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+    
+    
+    <!--起别名优化-->
+    <typeAliases >
+        <!--通过类名-->
+        <!--<typeAlias type="com.alivin.pojo.User" alias="User"/>-->
+        <!--通过包名-->
+        <package name="com.alivin.pojo"/>
+    </typeAliases>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${pwd}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <mapper resource="com/alivin/dao/TeacherMapper.xml"/>
+        <mapper resource="com/alivin/dao/StudentMapper.xml"/>
+    </mappers>
+
+</configuration>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alivin.dao.StudentMapper">
+
+    <!-- 联表查询 -->
+    <select id="getStudent2" resultMap="studentTeacher2">
+        select s.id, s.sname, t.tname from student s, teacher t
+        where s.tid = t.id;
+    </select>
+    <resultMap id="studentTeacher2" type="Student">
+        <result property="id" column="id"/>
+        <result property="sname" column="sname"/>
+        <association property="teacher" column="tid">
+            <result property="tname" column="tname"/>
+        </association>
+    </resultMap>
+
+    <!-- 子查询 -->
+    <select id="getStudent" resultMap="studentTeacher">
+        select * from student
+    </select>
+
+    <resultMap id="studentTeacher" type="Student">
+        <!--对于基本属性直接对应-->
+        <result property="id" column="id"/>
+        <result property="sname" column="sname"/>
+        <!--对于复杂属性 对象属性使用 association  集合属性使用 collection -->
+        <association property="teacher" column="tid" javaType="Teacher" select="getTeacher"/>
+    </resultMap>
+    
+    <select id="getTeacher" resultType="Teacher">
+        select * from teacher where id = #{id}
+    </select>
+</mapper>
